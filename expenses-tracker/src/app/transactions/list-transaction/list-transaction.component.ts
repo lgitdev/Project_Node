@@ -4,7 +4,10 @@ import {TransactionsService} from "../transactions.service";
 import {CurrencyPipe, DatePipe, NgClass, NgForOf} from "@angular/common";
 import {Router} from "@angular/router";
 import {BorderDirective} from "../border.directive";
-
+/*
+ * This Angular component displays a list of transactions
+ * including both income and expense transactions.
+ */
 @Component({
   selector: 'app-list-transaction',
   imports: [
@@ -27,11 +30,12 @@ export class ListTransactionComponent implements OnInit {
   constructor(private transactionsService: TransactionsService,
               private router:Router) {}
 
+  // Load transactions when the component is initialized
   ngOnInit() {
-    // Charger les transactions au démarrage
     this.loadTransactions();
   }
 
+  // Loads the transactions and updates filtered transactions
   private loadTransactions() {
     this.transactionsService.getTransactions().subscribe({
       next: (data) => {
@@ -44,6 +48,7 @@ export class ListTransactionComponent implements OnInit {
     });
   }
 
+  // Updates filtered transactions based on criteria
   private updateFilteredTransactions() {
     this.filteredTransactions = this.getFilteredAndSortedTransactions();
     this.incomeTransactions = this.filteredTransactions.filter(
@@ -54,7 +59,7 @@ export class ListTransactionComponent implements OnInit {
     );
   }
 
-  // method to display only the recent transactions, and from newest to oldest
+  // Method to display only the recent transactions, and from newest to oldest
   private getFilteredAndSortedTransactions(): Transaction[] {
     // extraxct the current date and last month
     const currentDate = new Date();
@@ -78,15 +83,18 @@ export class ListTransactionComponent implements OnInit {
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
+  // Navigates to the detailed view of a selected transaction
   goToTransaction(transaction:Transaction){
     this.router.navigate(['/detail',transaction.id]);
   }
 
+  // Redirects to the transaction list with specific query parameters
   redirectToTransactions() {
     this.router.navigate(['/transactions'], { queryParams: { showIncome: true, showExpense: true } });
 
   }
 
+  // Calculates the net total of income minus expenses
   getNetTotal(): number {
     const totalIncome = this.incomeTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
     const totalExpense = this.expenseTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);

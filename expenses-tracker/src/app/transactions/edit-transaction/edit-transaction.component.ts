@@ -4,7 +4,7 @@ import {NgIf} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {TransactionsService} from "../transactions.service";
 import {EditTransactionFormComponent} from "../edit-transaction-form/edit-transaction-form.component";
-
+//This Angular component handles the editing of a specific transaction.
 @Component({
   selector: 'app-edit-transaction',
   imports: [
@@ -24,6 +24,7 @@ export class EditTransactionComponent implements OnInit {
               private transactionsService: TransactionsService) {
   }
 
+  //Initialization of the component
   ngOnInit() {
     const transactionId: string | null = this.route.snapshot.paramMap.get('id');
     if (transactionId) {

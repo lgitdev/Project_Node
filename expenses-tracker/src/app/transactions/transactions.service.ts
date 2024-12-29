@@ -11,24 +11,25 @@ export class TransactionsService {
 
   constructor(private http:HttpClient) { }
 
+  // Retrieves all transactions from the API
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(this.apiUrl);
   }
-  // return all the expenses
+  // Return all the expenses
   getExpenses(): Observable<Transaction[]> {
     return this.getTransactions().pipe(
         map((transactions: Transaction[]) => transactions.filter((transaction) => transaction.isExpense))
     );
   }
 
-  // return all the incomes
+  // Return all the incomes
   getIncomes(): Observable<Transaction[]> {
     return this.getTransactions().pipe(
         map((transactions) => transactions.filter((transaction) => !transaction.isExpense))
     );
   }
 
-  // calculate the balance of our database
+  // Calculate the balance of our database
   calculateBalance(): Observable<number> {
     return this.getTransactions().pipe(
         map((transactions) => {
@@ -43,13 +44,13 @@ export class TransactionsService {
     );
   }
 
-  // find a transaction using its ID
+  // Find a transaction using its ID
   getTransactionById(transactionID: number): Observable<Transaction | undefined> {
     return this.getTransactions().pipe(
         map((transactions) => transactions.find((transaction) => transaction.id === transactionID))
     );
   }
-
+  // Returns the list of transaction categories
   getCategoryList():string[]{
     return [
       'Salary',
@@ -65,24 +66,25 @@ export class TransactionsService {
       'Others'
     ];
   }
-
+  // Returns the list of possible payment methods
   getPaymentMethods(): string[]{
     return ["Transfer",'Cash',"Card"];
   }
-
+  // Updates an existing transaction
   updateTransaction(transaction: Transaction): Observable<Transaction> {
     return this.http.put<Transaction>(`${this.apiUrl}/${transaction.id}`, transaction);
   }
-
+  //Delete a transaction by its ID
   deleteTransaction(id: number | undefined): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-
+  // Create a new transaction
   createTransaction(transaction: Transaction): Observable<Transaction> {
     return this.http.post<Transaction>(this.apiUrl, transaction);
   }
 
+  // Retrieves breakdown of expenses by category
   getExpensesByCategory(): Observable<{ category: string; total: number }[]> {
     return this.getExpenses().pipe(
         map((expenses) => {
@@ -101,6 +103,7 @@ export class TransactionsService {
     );
   }
 
+  // Recovers transactions by month (income/expenses)
   getMonthlyTransactions(): Observable<{ month: string; incomes: number; expenses: number }[]> {
     return this.getTransactions().pipe(
         map((transactions) => {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 
+// This component displays a success message after a transaction is deleted
 @Component({
   selector: 'app-delete-success',
   imports: [],
@@ -17,6 +18,7 @@ import {Router} from "@angular/router";
 export class DeleteSuccessComponent {
   constructor(private router: Router) {}
 
+// Method to navigate back to the dashboard
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }

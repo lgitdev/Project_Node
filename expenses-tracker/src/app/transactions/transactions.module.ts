@@ -10,6 +10,7 @@ import {DeleteSuccessComponent} from "./delete-success/delete-success.component"
 import {StatisticsComponent} from "./statistics/statistics.component";
 import {AgGridComponent} from "./ag-grid/ag-grid.component";
 
+//Defining routes for the various transaction pages
 export const transactionRoutes: Routes = [
   { path:'dashboard', component: ListTransactionComponent},
   { path:'detail/:id', component: DetailTransactionComponent},

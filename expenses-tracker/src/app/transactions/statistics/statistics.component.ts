@@ -3,6 +3,11 @@ import * as Highcharts from 'highcharts';
 import {TransactionsService} from "../transactions.service";
 import {HighchartsChartModule} from "highcharts-angular";
 
+/*
+ * This Angular component is responsible for displaying statistics
+ * on transactions using Highcharts.
+ */
+
 @Component({
   selector: 'app-statistics',
   imports: [
@@ -22,12 +27,14 @@ export class StatisticsComponent implements OnInit {
 
   constructor(private transactionsService: TransactionsService) {}
 
+  // Initialize the component and load all the charts
   ngOnInit(): void {
     this.loadBarChart();
     this.loadLineChart();
     this.loadPieChart();
   }
 
+  // Load the bar chart data : "expenses by category"
   private loadBarChart(): void {
     this.transactionsService.getExpensesByCategory().subscribe((data) => {
       const categories = data.map((item) => item.category);
@@ -62,6 +69,7 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // Load the line chart data : "Monthly transactions (incomes vs expenses)"
   private loadLineChart(): void {
     this.transactionsService.getMonthlyTransactions().subscribe((data) => {
       const months = data.map((item) => item.month);
@@ -99,6 +107,7 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // Load the pie chart data : "Expense distribution by category"
   private loadPieChart(): void {
     this.transactionsService.getExpensesByCategory().subscribe((data) => {
       const pieData = data.map((item) => ({

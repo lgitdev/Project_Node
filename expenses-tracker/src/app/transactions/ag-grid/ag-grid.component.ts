@@ -4,6 +4,11 @@ import {ClientSideRowModelModule, ColDef} from "ag-grid-community";
 import {TransactionsService} from "../transactions.service";
 import {Transaction} from "sequelize";
 
+/*
+ * This Angular component integrates the ag-Grid table to display transaction data.
+ * It loads transaction details such as ID, amount, type, category, date, description, payment method, and tags.
+ */
+
 @Component({
   selector: 'app-ag-grid',
   imports: [
@@ -53,12 +58,13 @@ export class AgGridComponent implements OnInit {
     this.loadTransactions();
   }
 
+  // Loads the transaction data from the TransactionsService and assigns it to rowData
   loadTransactions(): void {
     this.transactionsService.getTransactions().subscribe((data) => {
       console.log('Transactions Data:', data);
       this.rowData = data;
     });
   }
-
+  // Makes the ClientSideRowModelModule accessible within the component
   protected readonly ClientSideRowModelModule = ClientSideRowModelModule;
 }
