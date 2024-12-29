@@ -5,6 +5,8 @@ import {Transaction} from "../transaction";
 import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {TransactionTagFormatPipe} from "../transaction-tag-format.pipe";
 
+//This Angular component displays the details of a specific transaction
+
 @Component({
   selector: 'app-detail-transaction',
   imports: [
@@ -26,7 +28,7 @@ export class DetailTransactionComponent implements OnInit {
               private route:ActivatedRoute,
               private router: Router) {
   }
-
+  //Initialization of the component
   ngOnInit() {
     const transactionId: string | null = this.route.snapshot.paramMap.get('id');
     if (transactionId) {
@@ -37,12 +39,12 @@ export class DetailTransactionComponent implements OnInit {
           });
     }
   }
-
+  // Method to navigate back to the transaction list
   goToTransactionList() {
     this.router.navigate(['/transactions'], { queryParams: { showIncome: true, showExpense: true } });
   }
 
-
+  // Method to navigate to the edit page for a selected transaction
   goToEditTransaction(transaction: Transaction){
     this.router.navigate(['/edit', transaction.id]);
   }

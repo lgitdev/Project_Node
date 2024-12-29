@@ -4,7 +4,7 @@ import {TransactionsService} from "../transactions.service";
 import {Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-
+//This Angular component manages the form for editing a transaction.
 @Component({
   selector: 'app-edit-transaction-form',
   imports: [
@@ -27,12 +27,14 @@ export class EditTransactionFormComponent implements OnInit {
               private router: Router) {
   }
 
+  //Initializes categories, payment methods, and tags input when the component is loaded
   ngOnInit() {
     this.categories = this.transactionsService.getCategoryList();
     this.paymentMethods = this.transactionsService.getPaymentMethods();
     this.tagsInput = this.transaction.tags.join(', ');
   }
 
+  //Handles form submission to update the transaction
   onSubmit(){
     if (this.transaction) {
       this.transactionsService.updateTransaction(this.transaction).subscribe({
@@ -46,18 +48,22 @@ export class EditTransactionFormComponent implements OnInit {
     }
   }
 
+  //Sets the selected category to the transaction
   selectCategory(category: string): void {
     this.transaction.category = category;
   }
 
+  //Sets the selected payment method to the transaction
   selectPayment(payment: string) {
     this.transaction.paymentMethod = payment;
   }
 
+  //Updates the tags of the transaction based on the input field
   updateTags(input: string): void {
     this.transaction.tags = input.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
   }
 
+  //Removes a tag from the transaction by index
   removeTag(index: number): void {
     this.transaction.tags.splice(index, 1);
     this.tagsInput = this.transaction.tags.join(', '); // Update the input field

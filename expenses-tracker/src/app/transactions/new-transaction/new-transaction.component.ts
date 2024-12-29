@@ -5,6 +5,10 @@ import {NgIf} from "@angular/common";
 import {TransactionsService} from "../transactions.service";
 import {Router} from "@angular/router";
 
+/*
+ *  This Angular component allows users to create a new transaction
+ *  by providing a form to input transaction details.
+ */
 @Component({
   selector: 'app-new-transaction',
   imports: [
@@ -19,6 +23,7 @@ import {Router} from "@angular/router";
   styles: ``
 })
 export class NewTransactionComponent {
+// Initializes a new transaction with default values
   transaction: Transaction = {
     amount: 0,
     isExpense: true, // by default but we can change it
@@ -34,7 +39,7 @@ export class NewTransactionComponent {
       private router: Router
   ) {
   }
-
+  // Creates a new transaction by sending data to the service
   createTransaction() {
     this.transactionsService.createTransaction(this.transaction).subscribe({
       next: () => {

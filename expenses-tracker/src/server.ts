@@ -30,15 +30,15 @@ app.use(
     })
 );
 
-// Synchroniser la base de données
+// Synchronize database
 sequelize.sync({ alter: true })
     .then(() => console.log('Database synchronized.'))
     .catch(err => console.error('Error synchronizing database:', err));
 
-// Tester la connexion à la base de données
+// Test database connection
 app.get('/api/db-check', async (req, res) => {
     try {
-        await sequelize.authenticate(); // Vérifie la connexion à la base de données
+        await sequelize.authenticate(); // Checks database connection
         res.status(200).json({ message: 'Database connection successful!' });
     } catch (error) {
         // @ts-ignore
@@ -46,7 +46,7 @@ app.get('/api/db-check', async (req, res) => {
     }
 });
 
-// Ajouter les routes des transactions
+// Add transaction routes
 app.use('/api/transactions', transactionRoutes);
 
 /**
